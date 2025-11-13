@@ -4,31 +4,14 @@ import { api } from '../api'
 
 export default function AllPerks() {
   
- 
   const [perks, setPerks] = useState([])
-
   const [searchQuery, setSearchQuery] = useState('')
-
- 
   const [merchantFilter, setMerchantFilter] = useState('')
-
- 
   const [uniqueMerchants, setUniqueMerchants] = useState([])
-
-  
   const [loading, setLoading] = useState(true)
-
-  
   const [error, setError] = useState('')
 
   // ==================== SIDE EFFECTS WITH useEffect HOOK ====================
-
- /*
- TODO: HOOKS TO IMPLEMENT
- * useEffect Hook #1: Initial Data Loading
- * useEffect Hook #2: Auto-search on Input Change
-
-*/
 
   // Initial Data Loading
   useEffect(() => {
@@ -102,7 +85,6 @@ export default function AllPerks() {
 
   // ==================== EVENT HANDLERS ====================
 
-  
   function handleSearch(e) {
     // Prevent default form submission behavior (page reload)
     e.preventDefault()
@@ -112,7 +94,6 @@ export default function AllPerks() {
     loadAllPerks()
   }
 
-  
   function handleReset() {
     // Reset search and filter states to empty
     // The useEffect with [searchQuery, merchantFilter] dependencies
@@ -121,14 +102,7 @@ export default function AllPerks() {
     setMerchantFilter('')
   }
 
-  
-  
   return (
-    /*
-    TODO: HTML INPUT HANDLERS
- * Update state when user types in search box
- * update state when user selects filter
-    */
     <div className="max-w-6xl mx-auto space-y-6">
       
       {/* Page Title */}
@@ -145,7 +119,7 @@ export default function AllPerks() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             
-            
+            {/* Search Input - Controlled Component with value prop */}
             <div>
               <label className="block text-sm font-medium text-zinc-700 mb-2">
                 <span className="material-symbols-outlined text-sm align-middle">search</span>
@@ -155,6 +129,7 @@ export default function AllPerks() {
                 type="text"
                 className="input"
                 placeholder="Enter perk name..."
+                value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
               />
               <p className="text-xs text-zinc-500 mt-1">
@@ -162,7 +137,7 @@ export default function AllPerks() {
               </p>
             </div>
 
-            {/* Merchant Filter Dropdown - Controlled Component */}
+            {/* Merchant Filter Dropdown - Controlled Component with value prop */}
             <div>
               <label className="block text-sm font-medium text-zinc-700 mb-2">
                 <span className="material-symbols-outlined text-sm align-middle">store</span>
@@ -170,6 +145,7 @@ export default function AllPerks() {
               </label>
               <select
                 className="input"
+                value={merchantFilter}
                 onChange={e => setMerchantFilter(e.target.value)}
               >
                 <option value="">All Merchants</option>
@@ -227,16 +203,9 @@ export default function AllPerks() {
       {/* Perks Grid - Always visible, updates in place */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         
-        {/* 
-          Conditional Rendering with map():
-          - If perks.length > 0: Show perk cards
-          - If perks.length === 0: Show empty state (after the map)
-        */}
         {perks.map(perk => (
-          
           <Link to={`/perks/${perk._id}/view`}
             key={perk._id}
-           
             className="card hover:shadow-lg transition-shadow cursor-pointer"
           >
             {/* Perk Title */}
@@ -246,8 +215,6 @@ export default function AllPerks() {
 
             {/* Perk Metadata */}
             <div className="text-sm text-zinc-600 space-y-1">
-              {/* Conditional Rendering with && operator */}
-              {/* Only show merchant if it exists */}
               {perk.merchant && (
                 <div className="flex items-center gap-1">
                   <span className="material-symbols-outlined text-xs">store</span>
@@ -284,7 +251,6 @@ export default function AllPerks() {
           </Link>
         ))}
 
-        
         {perks.length === 0 && !loading && (
           <div className="col-span-full text-center py-12 text-zinc-600">
             <span className="material-symbols-outlined text-5xl mb-4 block text-zinc-400">
@@ -295,7 +261,6 @@ export default function AllPerks() {
           </div>
         )}
 
-        
         {loading && perks.length === 0 && (
           <div className="col-span-full text-center py-12 text-zinc-600">
             <span className="material-symbols-outlined text-5xl mb-4 block text-zinc-400 animate-spin">
@@ -308,4 +273,3 @@ export default function AllPerks() {
     </div>
   )
 }
-
